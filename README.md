@@ -732,6 +732,6 @@ GitHub: [SwapnilMundhekar](https://github.com/SwapnilMundhekar)
 
 ## 26. License
 
-This project is currently for personal learning, portfolio development, and interview preparation.
+This project is currently for personal learning, portfolio development.
 
 A formal license can be added later.
