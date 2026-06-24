@@ -1,0 +1,9 @@
+python-dotenv
+pydantic
+pymupdf
+chromadb
+sentence-transformers
+requests
+rich
+streamlit
+mcp
