@@ -1,0 +1,44 @@
+﻿[
+  {
+    "query_id": "car_accidental_damage",
+    "query": "Is accidental damage covered under car insurance?",
+    "expected_document_type": "policy_pds",
+    "expected_chunk_types": ["coverage_clause", "exclusion", "claims_requirement"]
+  },
+  {
+    "query_id": "car_claim_documents",
+    "query": "What documents or evidence are required when making a car insurance claim?",
+    "expected_document_type": "policy_pds",
+    "expected_chunk_types": ["claims_requirement"]
+  },
+  {
+    "query_id": "home_insurance_escape_of_water",
+    "query": "Is water damage or escape of liquid covered under home insurance?",
+    "expected_document_type": "policy_pds",
+    "expected_chunk_types": ["coverage_clause", "exclusion"]
+  },
+  {
+    "query_id": "complaint_handling_timeframes",
+    "query": "What are the complaint handling and internal dispute resolution obligations?",
+    "expected_document_type": "regulatory_guidance",
+    "expected_chunk_types": ["complaint_obligation"]
+  },
+  {
+    "query_id": "claims_handling_fairness",
+    "query": "What does the guidance say about fair and transparent claims handling?",
+    "expected_document_type": "claims_guidance",
+    "expected_chunk_types": ["claims_requirement", "general"]
+  },
+  {
+    "query_id": "general_insurance_code_claims",
+    "query": "What does the General Insurance Code of Practice say about claims handling?",
+    "expected_document_type": "industry_code",
+    "expected_chunk_types": ["claims_requirement", "general"]
+  },
+  {
+    "query_id": "operational_risk_cps230",
+    "query": "What does CPS 230 say about operational risk management and service providers?",
+    "expected_document_type": "prudential_standard",
+    "expected_chunk_types": ["enterprise_risk_control", "general"]
+  }
+]
