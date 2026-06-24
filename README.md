@@ -1,1228 +1,417 @@
-\# 🛡️ MCP-Based Insurance Claims RAG Agent
-
-
+# MCP-Based Insurance Claims RAG Agent
 
 <p align="center">
-
-&#x20; <img src="https://img.shields.io/badge/Status-Part%201%20Complete-blue" />
-
-&#x20; <img src="https://img.shields.io/badge/LLM-Local%20Ollama-green" />
-
-&#x20; <img src="https://img.shields.io/badge/RAG-Semantic%20Chunking-purple" />
-
-&#x20; <img src="https://img.shields.io/badge/MCP-Tool%20Calling-orange" />
-
-&#x20; <img src="https://img.shields.io/badge/Cloud%20Target-AWS%20Bedrock-yellow" />
-
+  <img src="https://readme-typing-svg.herokuapp.com?font=Inter&size=24&duration=2500&pause=800&center=true&vCenter=true&width=900&lines=Enterprise+Insurance+Claims+RAG+Agent;MCP+Tool+Calling+Control+Plane;Local+Ollama+to+AWS+Bedrock+Migration;Semantic+Chunking+over+Insurance+Policy+Documents" alt="Animated project title" />
 </p>
-
-
 
 <p align="center">
-
-&#x20; <b>Enterprise-grade local-first AI agent for insurance claims, policy intelligence, semantic RAG, MCP tools, and governed tool-calling pipelines.</b>
-
+  <img src="https://img.shields.io/badge/status-part%201%20complete-1f6feb" alt="Project status" />
+  <img src="https://img.shields.io/badge/runtime-local%20first-2ea043" alt="Runtime" />
+  <img src="https://img.shields.io/badge/llm-ollama%20local-6f42c1" alt="Local LLM" />
+  <img src="https://img.shields.io/badge/rag-semantic%20retrieval-d29922" alt="RAG" />
+  <img src="https://img.shields.io/badge/interface-mcp-bc4c00" alt="MCP" />
+  <img src="https://img.shields.io/badge/cloud%20target-aws%20bedrock-232f3e" alt="AWS Bedrock" />
 </p>
 
+<p align="center">
+  <b>Local-first enterprise AI engineering project for insurance policy intelligence, semantic retrieval, MCP tools, and governed tool-calling workflows.</b>
+</p>
 
+---
 
-\---
+## Project Overview
 
+This project builds an enterprise-style AI agent for insurance claims and policy intelligence.
 
+The system is designed to answer questions over insurance policy and regulatory documents, retrieve relevant clauses, and expose retrieval capabilities through MCP tools. The local version runs with Ollama and a local vector database. The future cloud version will migrate to Claude on Amazon Bedrock and AWS-native retrieval infrastructure.
 
-\## 🚀 Project Vision
+The goal is not to create a simple chatbot. The goal is to build a governed AI system where the language model proposes actions, the orchestrator validates them, MCP tools expose controlled capabilities, and retrieval outputs remain traceable to source documents.
 
+---
 
-
-This project builds a \*\*local-first enterprise AI agent\*\* that can reason over insurance policy and regulatory documents, retrieve relevant clauses, and execute governed tool calls through an MCP-based architecture.
-
-
-
-The goal is not to build a simple chatbot.
-
-
-
-The goal is to build a \*\*senior AI engineering system\*\* where:
-
-
-
-\* The LLM does \*\*not\*\* directly execute actions.
-
-\* The application orchestrator validates and governs tool calls.
-
-\* MCP servers expose controlled tools.
-
-\* Insurance policy documents are semantically chunked and retrieved.
-
-\* Every answer can be traced back to source documents.
-
-\* Local development can later migrate to AWS using Claude on Amazon Bedrock.
-
-
-
-\---
-
-
-
-\## 🎯 Core Use Case
-
-
-
-Example user question:
-
-
-
-> “For this motor insurance claim, check whether accidental damage is covered, identify relevant exclusions, check complaint handling obligations, and draft a customer response.”
-
-
-
-The system should eventually:
-
-
-
-1\. Retrieve relevant policy clauses.
-
-2\. Compare claim facts against coverage and exclusions.
-
-3\. Retrieve regulatory obligations from AFCA, ASIC, Code of Practice, and APRA documents.
-
-4\. Generate a grounded response with citations.
-
-5\. Use MCP tools for retrieval, claim checks, audit logging, and controlled workflow actions.
-
-
-
-\---
-
-
-
-\## 🧠 Why This Project Matters
-
-
-
-Most AI demos stop at:
-
-
+## Core Principle
 
 ```text
-
-User question → LLM answer
-
+The model proposes.
+The orchestrator validates.
+The MCP server executes.
+The retrieval layer provides grounded evidence.
 ```
 
+---
 
+## Current Status
 
-This project goes further:
+| Build Part | Module                                          | Status   |
+| ---------: | ----------------------------------------------- | -------- |
+|          1 | Project skeleton and local environment          | Complete |
+|          2 | PDF ingestion                                   | Next     |
+|          3 | Cleaning and metadata extraction                | Planned  |
+|          4 | Section-aware semantic chunking                 | Planned  |
+|          5 | Embeddings and local vector store               | Planned  |
+|          6 | Retrieval testing                               | Planned  |
+|          7 | Ollama local LLM integration                    | Planned  |
+|          8 | MCP policy knowledge server                     | Planned  |
+|          9 | Governed tool-calling orchestrator              | Planned  |
+|         10 | Streamlit app, tracing, documentation, AWS plan | Planned  |
 
+---
 
-
-```text
-
-User question
-
-&#x20;  ↓
-
-LLM reasoning
-
-&#x20;  ↓
-
-Structured tool call
-
-&#x20;  ↓
-
-Orchestrator validation
-
-&#x20;  ↓
-
-MCP tool execution
-
-&#x20;  ↓
-
-Semantic RAG retrieval
-
-&#x20;  ↓
-
-Grounded answer with citations
-
-&#x20;  ↓
-
-Trace and audit log
-
-```
-
-
-
-The key principle:
-
-
-
-> \*\*The model proposes. The orchestrator validates. The MCP server executes.\*\*
-
-
-
-\---
-
-
-
-\## 🏗️ High-Level Architecture
-
-
+## System Architecture
 
 ```mermaid
-
 flowchart TD
+    A[User Question] --> B[Local Agent Application]
+    B --> C[Ollama Local LLM]
+    C --> D{Is a tool required?}
 
-&#x20;   A\[User Question] --> B\[Local Agent App]
+    D -->|No| E[Generate Grounded Answer]
+    D -->|Yes| F[Tool Calling Orchestrator]
 
-&#x20;   B --> C\[LLM via Ollama]
+    F --> G[Validate Tool Name]
+    G --> H[Validate Tool Arguments]
+    H --> I[Apply Policy and Safety Checks]
+    I --> J[MCP Client]
 
-&#x20;   C --> D{Tool Required?}
+    J --> K[MCP Policy Knowledge Server]
+    K --> L[Retrieval Service]
+    L --> M[Local Vector Store]
+    M --> N[Semantic Chunks]
+    N --> O[Insurance PDF Documents]
 
+    K --> P[Structured Tool Result]
+    P --> C
+    C --> Q[Final Answer with Citations]
 
-
-&#x20;   D -- No --> E\[Direct Grounded Response]
-
-&#x20;   D -- Yes --> F\[Tool-Calling Orchestrator]
-
-
-
-&#x20;   F --> G\[Validate Tool Name]
-
-&#x20;   G --> H\[Validate Arguments]
-
-&#x20;   H --> I\[Apply Safety and Policy Checks]
-
-
-
-&#x20;   I --> J\[MCP Client]
-
-&#x20;   J --> K\[MCP Policy Knowledge Server]
-
-
-
-&#x20;   K --> L\[Vector Store]
-
-&#x20;   L --> M\[Semantic Chunks]
-
-&#x20;   M --> N\[Insurance PDF Documents]
-
-
-
-&#x20;   K --> O\[Tool Result]
-
-&#x20;   O --> C
-
-&#x20;   C --> P\[Final Answer with Citations]
-
-
-
-&#x20;   F --> Q\[Trace Logs]
-
-&#x20;   F --> R\[Audit Events]
-
+    F --> R[Trace Logs]
+    F --> S[Audit Events]
 ```
 
+---
 
-
-\---
-
-
-
-\## 📚 Knowledge Base Documents
-
-
-
-The local knowledge base is built from insurance and regulatory PDF documents stored outside the Git repository.
-
-
-
-Current local PDF folder:
-
-
-
-```text
-
-C:\\Users\\SSS\\Desktop\\AI Project\\pdf policy documents
-
-```
-
-
-
-Planned document categories:
-
-
-
-| Category            | Example Documents                               | Purpose                                    |
-
-| ------------------- | ----------------------------------------------- | ------------------------------------------ |
-
-| Policy PDS          | NRMA Car Insurance PDS, NRMA Home Insurance PDS | Coverage, exclusions, claim conditions     |
-
-| Claims Guidance     | AFCA claims handling guidance                   | Fair claims handling and dispute reasoning |
-
-| Regulatory Guidance | ASIC INFO 253, ASIC RG 271                      | Claims handling and complaint obligations  |
-
-| Industry Conduct    | General Insurance Code of Practice              | Customer treatment and industry standards  |
-
-| Enterprise Risk     | APRA CPS 230                                    | Operational risk, resilience, controls     |
-
-
-
-PDF files are intentionally excluded from GitHub using `.gitignore`.
-
-
-
-\---
-
-
-
-\## 🧩 Planned Local Stack
-
-
-
-| Layer               | Technology                                              |
-
-| ------------------- | ------------------------------------------------------- |
-
-| Language            | Python                                                  |
-
-| Local LLM Runtime   | Ollama                                                  |
-
-| Local LLM           | Qwen / Llama family model                               |
-
-| PDF Extraction      | PyMuPDF                                                 |
-
-| Chunking            | Section-aware semantic chunking                         |
-
-| Embeddings          | SentenceTransformers or local embedding model           |
-
-| Vector Store        | ChromaDB                                                |
-
-| Tool Interface      | MCP                                                     |
-
-| Orchestration       | Custom Python orchestrator                              |
-
-| UI                  | Streamlit                                               |
-
-| Cloud Target        | Claude on Amazon Bedrock                                |
-
-| Future Vector Store | Amazon OpenSearch Serverless or Bedrock Knowledge Bases |
-
-
-
-\---
-
-
-
-\## 🔥 Current Build Status
-
-
-
-| Part | Module                                    | Status     |
-
-| ---: | ----------------------------------------- | ---------- |
-
-|    1 | Project skeleton and local setup          | ✅ Complete |
-
-|    2 | PDF ingestion                             | ⏳ Next     |
-
-|    3 | Cleaning and metadata extraction          | ⏳ Planned  |
-
-|    4 | Section-aware semantic chunking           | ⏳ Planned  |
-
-|    5 | Embeddings and local vector DB            | ⏳ Planned  |
-
-|    6 | Retrieval testing                         | ⏳ Planned  |
-
-|    7 | Ollama LLM integration                    | ⏳ Planned  |
-
-|    8 | MCP policy knowledge server               | ⏳ Planned  |
-
-|    9 | Governed tool-calling orchestrator        | ⏳ Planned  |
-
-|   10 | Streamlit app, tracing, and documentation | ⏳ Planned  |
-
-
-
-\---
-
-
-
-\## 🧱 Repository Structure
-
-
-
-```text
-
-insurance-claims-mcp-rag/
-
-│
-
-├── app/
-
-│   └── .gitkeep
-
-│
-
-├── config/
-
-│   └── .gitkeep
-
-│
-
-├── data/
-
-│   ├── raw/
-
-│   │   └── .gitkeep
-
-│   ├── processed/
-
-│   │   └── .gitkeep
-
-│   └── chunks/
-
-│       └── .gitkeep
-
-│
-
-├── docs/
-
-│   └── .gitkeep
-
-│
-
-├── logs/
-
-│   └── .gitkeep
-
-│
-
-├── scripts/
-
-│   └── .gitkeep
-
-│
-
-├── src/
-
-│   ├── ingestion/
-
-│   │   └── .gitkeep
-
-│   ├── chunking/
-
-│   │   └── .gitkeep
-
-│   ├── retrieval/
-
-│   │   └── .gitkeep
-
-│   ├── llm/
-
-│   │   └── .gitkeep
-
-│   ├── mcp\_server/
-
-│   │   └── .gitkeep
-
-│   └── orchestrator/
-
-│       └── .gitkeep
-
-│
-
-├── tests/
-
-│   └── .gitkeep
-
-│
-
-├── vector\_store/
-
-│   └── .gitkeep
-
-│
-
-├── .env.example
-
-├── .gitignore
-
-├── README.md
-
-└── requirements.txt
-
-```
-
-
-
-\---
-
-
-
-\## 🧬 Semantic Chunking Strategy
-
-
-
-This project will not use naive word-based chunking.
-
-
-
-The planned chunking strategy is:
-
-
+## Local-to-Cloud Migration View
 
 ```mermaid
-
 flowchart LR
-
-&#x20;   A\[PDF Page Text] --> B\[Text Cleaning]
-
-&#x20;   B --> C\[Heading and Section Detection]
-
-&#x20;   C --> D\[Clause-Aware Splitting]
-
-&#x20;   D --> E\[Sentence and Paragraph Grouping]
-
-&#x20;   E --> F\[Semantic Similarity Breakpoints]
-
-&#x20;   F --> G\[Token Limit Guardrail]
-
-&#x20;   G --> H\[Chunk Metadata]
-
-&#x20;   H --> I\[Vector Store]
-
+    A[Local PDF Folder] --> B[AWS S3 Document Bucket]
+    C[Ollama Local LLM] --> D[Claude on Amazon Bedrock]
+    E[ChromaDB Local Vector Store] --> F[Amazon OpenSearch Serverless]
+    G[Local MCP Server] --> H[AWS Hosted MCP Services]
+    I[Local Logs] --> J[Amazon CloudWatch]
+    K[Local Streamlit App] --> L[Cloud Frontend or Internal App]
 ```
 
+---
 
-
-Each chunk will preserve metadata such as:
-
-
-
-```text
-
-document\_name
-
-document\_type
-
-provider\_or\_regulator
-
-product\_type
-
-section\_title
-
-page\_number
-
-chunk\_id
-
-source\_path
-
-```
-
-
-
-This allows the agent to answer with traceable citations instead of unsupported text.
-
-
-
-\---
-
-
-
-\## 🛠️ Tool-Calling Pipeline
-
-
-
-The final system will use a governed tool-calling pipeline.
-
-
+## Tool Calling Lifecycle
 
 ```mermaid
-
 sequenceDiagram
+    participant User
+    participant LLM as Local LLM
+    participant Orchestrator
+    participant MCP as MCP Server
+    participant Store as Vector Store
 
-&#x20;   participant User
-
-&#x20;   participant LLM
-
-&#x20;   participant Orchestrator
-
-&#x20;   participant MCP
-
-&#x20;   participant VectorDB
-
-
-
-&#x20;   User->>LLM: Ask insurance claim question
-
-&#x20;   LLM->>Orchestrator: Structured tool request
-
-&#x20;   Orchestrator->>Orchestrator: Validate tool name and arguments
-
-&#x20;   Orchestrator->>Orchestrator: Apply safety and policy checks
-
-&#x20;   Orchestrator->>MCP: Execute approved tool
-
-&#x20;   MCP->>VectorDB: Search relevant chunks
-
-&#x20;   VectorDB->>MCP: Return matched clauses
-
-&#x20;   MCP->>Orchestrator: Tool result
-
-&#x20;   Orchestrator->>LLM: Observation
-
-&#x20;   LLM->>User: Grounded answer with citations
-
+    User->>LLM: Ask policy or claim question
+    LLM->>Orchestrator: Propose structured tool call
+    Orchestrator->>Orchestrator: Validate tool name
+    Orchestrator->>Orchestrator: Validate arguments
+    Orchestrator->>Orchestrator: Apply safety checks
+    Orchestrator->>MCP: Execute approved MCP tool
+    MCP->>Store: Retrieve relevant chunks
+    Store-->>MCP: Return matched chunks
+    MCP-->>Orchestrator: Return structured tool result
+    Orchestrator-->>LLM: Provide observation
+    LLM-->>User: Generate grounded answer with citations
 ```
 
+---
 
+## Retrieval Pipeline
 
-Core rule:
+```mermaid
+flowchart TD
+    A[Insurance PDF Documents] --> B[PDF Page Extraction]
+    B --> C[Text Cleaning]
+    C --> D[Document Metadata Assignment]
+    D --> E[Heading and Clause Detection]
+    E --> F[Section Aware Chunking]
+    F --> G[Semantic Boundary Detection]
+    G --> H[Token Limit Guardrail]
+    H --> I[Embedding Generation]
+    I --> J[Vector Store Index]
+    J --> K[Top K Retrieval]
+    K --> L[Answer Context with Citations]
+```
 
+---
 
+## Planned Knowledge Base
+
+The local policy documents are stored outside the Git repository.
 
 ```text
-
-LLM = reasoning and instruction generation
-
-Orchestrator = validation and execution control
-
-MCP server = governed tool interface
-
-Vector DB = semantic knowledge layer
-
+C:\Users\SSS\Desktop\AI Project\pdf policy documents
 ```
 
+The documents are expected to cover these categories:
 
+| Category            | Example Documents                               | Purpose                                               |
+| ------------------- | ----------------------------------------------- | ----------------------------------------------------- |
+| Policy documents    | NRMA Car Insurance PDS, NRMA Home Insurance PDS | Coverage, exclusions, claim conditions                |
+| Claims handling     | AFCA claims handling guidance                   | Fair claims handling and dispute context              |
+| Regulatory guidance | ASIC INFO 253, ASIC RG 271                      | Claims handling and complaint obligations             |
+| Industry conduct    | General Insurance Code of Practice              | Customer treatment and industry standards             |
+| Operational risk    | APRA CPS 230                                    | Enterprise risk, resilience, and operational controls |
 
-\---
+PDF files are not committed to GitHub.
 
+---
 
+## Planned MCP Tools
 
-\## 🧪 Planned MCP Tools
+| Tool Name                   | Purpose                                       | Risk Level |
+| --------------------------- | --------------------------------------------- | ---------- |
+| `search_policy_documents`   | Search policy and regulatory document chunks  | Low        |
+| `get_policy_clause`         | Retrieve a specific policy section or clause  | Low        |
+| `compare_policy_coverage`   | Compare claim facts against retrieved clauses | Medium     |
+| `get_complaint_obligations` | Retrieve complaint handling obligations       | Low        |
+| `draft_customer_response`   | Draft customer-facing claim communication     | Medium     |
+| `log_audit_event`           | Record tool call and workflow trace           | Low        |
 
+Side-effecting tools such as sending email, updating claim status, or escalating a claim will require explicit approval gates in later versions.
 
+---
 
-| Tool                        | Purpose                                              | Risk Level |
+## Technology Stack
 
-| --------------------------- | ---------------------------------------------------- | ---------- |
+| Layer            | Local MVP                                     | Future AWS Version                                      |
+| ---------------- | --------------------------------------------- | ------------------------------------------------------- |
+| LLM              | Ollama local model                            | Claude on Amazon Bedrock                                |
+| Embeddings       | SentenceTransformers or local embedding model | Amazon Bedrock embeddings                               |
+| Vector store     | ChromaDB                                      | Amazon OpenSearch Serverless or Bedrock Knowledge Bases |
+| Tool interface   | MCP Python server                             | AWS-hosted MCP services                                 |
+| Orchestration    | Custom Python orchestrator                    | Containerized service or AWS Lambda/ECS                 |
+| UI               | Streamlit                                     | Streamlit, React, or internal enterprise frontend       |
+| Logs             | Local log files                               | Amazon CloudWatch                                       |
+| Document storage | Local PDF folder                              | Amazon S3                                               |
 
-| `search\_policy\_documents`   | Retrieve relevant policy and regulatory chunks       | Low        |
+---
 
-| `get\_policy\_clause`         | Fetch a specific clause or section                   | Low        |
+## Repository Structure
 
-| `compare\_policy\_coverage`   | Compare claim facts against retrieved policy clauses | Medium     |
+```text
+insurance-claims-mcp-rag/
+|
+|-- app/
+|-- config/
+|-- data/
+|   |-- raw/
+|   |-- processed/
+|   |-- chunks/
+|
+|-- docs/
+|-- logs/
+|-- scripts/
+|-- src/
+|   |-- ingestion/
+|   |-- chunking/
+|   |-- retrieval/
+|   |-- llm/
+|   |-- mcp_server/
+|   |-- orchestrator/
+|
+|-- tests/
+|-- vector_store/
+|-- .env.example
+|-- .gitignore
+|-- README.md
+|-- requirements.txt
+```
 
-| `get\_complaint\_obligations` | Retrieve complaint and dispute obligations           | Low        |
+---
 
-| `draft\_customer\_response`   | Draft a customer-facing message                      | Medium     |
+## Build Roadmap
 
-| `log\_audit\_event`           | Record trace and workflow event                      | Low        |
+```mermaid
+gantt
+    title Project Build Roadmap
+    dateFormat  YYYY-MM-DD
+    axisFormat  %d %b
 
+    section Foundation
+    Project skeleton                  :done, p1, 2026-06-24, 1d
+    PDF ingestion                     :active, p2, 2026-06-25, 1d
+    Cleaning and metadata             :p3, 2026-06-26, 1d
 
+    section Retrieval
+    Section aware semantic chunking    :p4, 2026-06-27, 1d
+    Embeddings and vector store        :p5, 2026-06-28, 1d
+    Retrieval testing                  :p6, 2026-06-29, 1d
 
-Future tools that create external side effects, such as sending emails or updating claims, should require approval gates.
+    section Agent Layer
+    Ollama LLM integration             :p7, 2026-06-30, 1d
+    MCP policy server                  :p8, 2026-07-01, 1d
+    Tool calling orchestrator          :p9, 2026-07-02, 1d
 
+    section Productization
+    Streamlit app and documentation    :p10, 2026-07-03, 1d
+```
 
+---
 
-\---
+## Local Setup
 
-
-
-\## 🖥️ Local Setup
-
-
-
-\### 1. Clone the repository
-
-
+### 1. Clone the repository
 
 ```bash
-
 git clone https://github.com/SwapnilMundhekar/insurance-claims-mcp-rag.git
-
 cd insurance-claims-mcp-rag
-
 ```
 
-
-
-\### 2. Create virtual environment
-
-
+### 2. Create virtual environment
 
 ```bash
-
 python -m venv .venv
-
 ```
 
-
-
-\### 3. Activate virtual environment on Windows
-
-
+### 3. Activate virtual environment on Windows
 
 ```powershell
-
-.\\.venv\\Scripts\\Activate.ps1
-
+.\.venv\Scripts\Activate.ps1
 ```
 
-
-
-\### 4. Install dependencies
-
-
+### 4. Install dependencies
 
 ```bash
-
 pip install -r requirements.txt
-
 ```
 
+### 5. Create `.env`
 
-
-\### 5. Create local `.env`
-
-
-
-Copy:
-
-
-
-```bash
-
-.env.example
-
-```
-
-
-
-to:
-
-
-
-```bash
-
-.env
-
-```
-
-
-
-Then update:
-
-
+Copy `.env.example` to `.env` and update the local PDF path.
 
 ```text
-
-PDF\_SOURCE\_DIR=C:\\Users\\SSS\\Desktop\\AI Project\\pdf policy documents
-
+PDF_SOURCE_DIR=C:\Users\SSS\Desktop\AI Project\pdf policy documents
 ```
 
+---
 
-
-\---
-
-
-
-\## ⚙️ Environment Variables
-
-
-
-Example:
-
-
+## Environment Variables
 
 ```text
+PROJECT_NAME=insurance-claims-mcp-rag
+PROJECT_ROOT=YOUR_PROJECT_PATH
+PDF_SOURCE_DIR=YOUR_POLICY_PDF_FOLDER_PATH
 
-PROJECT\_NAME=insurance-claims-mcp-rag
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=qwen2.5:7b-instruct
 
-PROJECT\_ROOT=YOUR\_PROJECT\_PATH
-
-PDF\_SOURCE\_DIR=YOUR\_POLICY\_PDF\_FOLDER\_PATH
-
-
-
-OLLAMA\_BASE\_URL=http://localhost:11434
-
-OLLAMA\_MODEL=qwen2.5:7b-instruct
-
-
-
-VECTOR\_DB\_DIR=.\\vector\_store\\chroma
-
-CHUNK\_OUTPUT\_DIR=.\\data\\chunks
-
-PROCESSED\_OUTPUT\_DIR=.\\data\\processed
-
+VECTOR_DB_DIR=.\vector_store\chroma
+CHUNK_OUTPUT_DIR=.\data\chunks
+PROCESSED_OUTPUT_DIR=.\data\processed
 ```
 
+---
 
+## What Part 1 Contains
 
-\---
+Part 1 includes:
 
+| Area                            | Implemented |
+| ------------------------------- | ----------- |
+| Project folder structure        | Yes         |
+| Python virtual environment plan | Yes         |
+| Requirements file               | Yes         |
+| Git ignore rules                | Yes         |
+| Environment example             | Yes         |
+| Source module boundaries        | Yes         |
+| PDF data excluded from GitHub   | Yes         |
 
+---
 
-\## 🧭 Development Roadmap
+## Next Build Step
 
-
-
-\### ✅ Part 1 — Project Skeleton
-
-
-
-Completed:
-
-
-
-\* Created project folder
-
-\* Created Python virtual environment
-
-\* Added source folders
-
-\* Added `.gitignore`
-
-\* Added `.env.example`
-
-\* Added dependency file
-
-\* Initialized Git repository
-
-
-
-\### ⏭️ Part 2 — PDF Ingestion
-
-
-
-Next goal:
-
-
-
-\* Load all PDFs from local source directory
-
-\* Extract text page by page
-
-\* Preserve document name and page number
-
-\* Save extracted output as structured JSON
-
-
+Part 2 will implement PDF ingestion.
 
 Expected output:
 
-
-
 ```text
-
-data/processed/extracted\_pages.json
-
+data/processed/extracted_pages.json
 ```
 
+The ingestion output will contain:
 
+```json
+{
+  "document_name": "example-policy-document.pdf",
+  "page_number": 1,
+  "text": "Extracted page text..."
+}
+```
 
-\### ⏭️ Part 3 — Cleaning and Metadata
+---
 
+## Future Demo Assets
 
-
-Planned:
-
-
-
-\* Remove PDF extraction noise
-
-\* Normalize whitespace
-
-\* Preserve headings
-
-\* Add document metadata
-
-\* Classify documents by type
-
-
-
-\### ⏭️ Part 4 — Semantic Chunking
-
-
-
-Planned:
-
-
-
-\* Split by headings and clauses
-
-\* Group related sentences
-
-\* Apply semantic breakpoints
-
-\* Add chunk overlap and token guardrails
-
-\* Save chunk objects
-
-
-
-\### ⏭️ Part 5 — Vector Store
-
-
-
-Planned:
-
-
-
-\* Generate embeddings
-
-\* Store chunks in ChromaDB
-
-\* Add metadata filters
-
-\* Build local search utility
-
-
-
-\### ⏭️ Part 6 — Retrieval Evaluation
-
-
-
-Planned:
-
-
-
-\* Test sample insurance questions
-
-\* Inspect top-k retrieved chunks
-
-\* Validate citations
-
-\* Improve chunk quality
-
-
-
-\### ⏭️ Part 7 — Local LLM Integration
-
-
-
-Planned:
-
-
-
-\* Connect to Ollama
-
-\* Generate grounded answers
-
-\* Prevent unsupported claims
-
-\* Include source citations
-
-
-
-\### ⏭️ Part 8 — MCP Server
-
-
-
-Planned:
-
-
-
-\* Expose retrieval as MCP tools
-
-\* Add tool schemas
-
-\* Return structured results
-
-
-
-\### ⏭️ Part 9 — Tool-Calling Orchestrator
-
-
-
-Planned:
-
-
-
-\* Let LLM propose tool calls
-
-\* Validate tool calls
-
-\* Execute MCP tools
-
-\* Return observations back to LLM
-
-
-
-\### ⏭️ Part 10 — Final Local App
-
-
-
-Planned:
-
-
-
-\* Streamlit UI
-
-\* Trace panel
-
-\* Source citation panel
-
-\* Demo questions
-
-\* Documentation
-
-\* AWS migration plan
-
-
-
-\---
-
-
-
-\## 🎬 Demo Preview
-
-
-
-Demo GIF will be added after the Streamlit application is built.
-
-
-
-Planned location:
-
-
+After the Streamlit application is built, a real demo animation will be added here:
 
 ```text
-
 docs/assets/demo.gif
-
 ```
 
-
-
-Placeholder:
-
-
+The README will then include:
 
 ```markdown
-
-!\[Demo Preview](docs/assets/demo.gif)
-
+![Application Demo](docs/assets/demo.gif)
 ```
 
+No fake demo screenshots or generated performance metrics are included in this repository.
 
+---
 
-\---
+## Engineering Concepts Demonstrated
 
+This project is designed to demonstrate:
 
+| Concept           | How it appears in the project                   |
+| ----------------- | ----------------------------------------------- |
+| RAG               | Retrieval over policy and regulatory documents  |
+| Semantic chunking | Section-aware document splitting                |
+| MCP               | Tool interface for controlled retrieval actions |
+| Tool calling      | LLM proposes structured tool use                |
+| Orchestration     | Python validates and executes tool requests     |
+| Observability     | Trace logs and audit events                     |
+| Governance        | Approval gates for risky actions                |
+| Cloud migration   | Local Ollama to Claude on AWS Bedrock           |
 
-\## 🧠 Senior Engineering Concepts Covered
+---
 
+## Design Constraints
 
+The system will follow these constraints:
 
-This project demonstrates:
+1. Do not commit PDFs to GitHub.
+2. Do not hardcode secrets.
+3. Do not allow the LLM to directly execute actions.
+4. Validate every tool call before execution.
+5. Preserve document metadata for citations.
+6. Return uncertainty when retrieved context is insufficient.
+7. Keep local development cloud-portable.
 
+---
 
+## Author
 
-\* Local-first AI development
+Swapnil Mundhekar
 
-\* Retrieval-Augmented Generation
+GitHub: [SwapnilMundhekar](https://github.com/SwapnilMundhekar)
 
-\* Section-aware semantic chunking
+---
 
-\* Metadata-driven retrieval
-
-\* Tool calling
-
-\* MCP server design
-
-\* Agent orchestration
-
-\* Validation before execution
-
-\* Human approval gates
-
-\* Audit logging
-
-\* Enterprise insurance workflow modeling
-
-\* AWS migration planning
-
-\* Claude on Amazon Bedrock deployment path
-
-
-
-\---
-
-
-
-\## ☁️ Future AWS Deployment Plan
-
-
-
-Local development stack:
-
-
-
-```text
-
-Ollama
-
-ChromaDB
-
-Local MCP server
-
-Local PDFs
-
-Streamlit
-
-```
-
-
-
-Future AWS stack:
-
-
-
-```text
-
-Claude on Amazon Bedrock
-
-Amazon OpenSearch Serverless or Bedrock Knowledge Bases
-
-S3 document storage
-
-AWS Lambda or ECS for MCP services
-
-CloudWatch logs
-
-IAM access control
-
-API Gateway
-
-Streamlit or React frontend
-
-```
-
-
-
-Migration view:
-
-
-
-```mermaid
-
-flowchart LR
-
-&#x20;   A\[Local PDFs] --> B\[S3 Document Bucket]
-
-&#x20;   C\[ChromaDB] --> D\[OpenSearch Serverless]
-
-&#x20;   E\[Ollama Local LLM] --> F\[Claude on Bedrock]
-
-&#x20;   G\[Local MCP Server] --> H\[AWS Hosted MCP Services]
-
-&#x20;   I\[Local Logs] --> J\[CloudWatch]
-
-```
-
-
-
-\---
-
-
-
-\## ⚠️ Current Limitations
-
-
-
-This project is under active development.
-
-
-
-Current limitations:
-
-
-
-\* PDF ingestion is not implemented yet.
-
-\* Semantic chunking is planned but not implemented yet.
-
-\* Vector database is not built yet.
-
-\* MCP server is not implemented yet.
-
-\* Tool-calling orchestration is not implemented yet.
-
-\* No production deployment exists yet.
-
-\* No real customer, claim, or private insurance data is included.
-
-
-
-The project currently contains the initial repository structure and setup files only.
-
-
-
-\---
-
-
-
-\## 📌 Design Principle
-
-
-
-> Build the system as if it will eventually run in an enterprise environment, even while testing locally.
-
-
-
-That means:
-
-
-
-\* No hardcoded secrets.
-
-\* No PDFs committed to GitHub.
-
-\* Clear module boundaries.
-
-\* Traceable outputs.
-
-\* Structured metadata.
-
-\* Tool validation before execution.
-
-\* Local-first development before cloud deployment.
-
-
-
-\---
-
-
-
-\## 👤 Author
-
-
-
-\*\*Swapnil Mundhekar\*\*
-
-
-
-GitHub: \[SwapnilMundhekar](https://github.com/SwapnilMundhekar)
-
-
-
-\---
-
-
-
-\## 📄 License
-
-
+## License
 
 This project is currently for personal learning, portfolio development, and interview preparation.
 
-
-
 A formal license can be added later.
-
-
-
